@@ -5,8 +5,8 @@
 ** lib
 */
 
-
 int my_putchar(char c);
+
 int my_put_unsigned_nbr(unsigned int nb)
 {
     int c;

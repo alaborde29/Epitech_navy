@@ -11,7 +11,9 @@ all:
 
 NAME = navy
 
-SRC =	main.c
+SRC =	src/error.c 		\
+		src/error_2.c 		\
+		main.c
 
 FLAGS = -Werror -Wextra -Wall -Wshadow
 
