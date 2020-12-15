@@ -11,9 +11,9 @@
 int find_boat_orientation(char *str)
 {
     if (str[2] == str[5])
-        return (2);
-    if (str[3] == str[6])
         return (1);
+    if (str[3] == str[6])
+        return (2);
     if ((str[2] != str[5]) && (str[3] != str[6]))
         return (84);
     return (0);
@@ -26,9 +26,9 @@ int is_size_normal(char *str)
 
     if (orientation == 84)
         return (84);
-    if (orientation == 1)
-        size = str[5] - str[2];
     if (orientation == 2)
+        size = str[5] - str[2];
+    if (orientation == 1)
         size = str[6] - str[3];
     if (size < 0)
         size = size * -1 + 1;

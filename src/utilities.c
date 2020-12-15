@@ -28,28 +28,18 @@ char **split_lines(char *str, int tab_size)
     int j = 0;
     int malloc_size = 0;
 
-    my_putchar('a');
     for (int i = 0; i != tab_size - 1; i++, n++, o++) {
         while (str[o] != '\n' && str[o] != '\0') {
-            my_putchar('b');
             o++;
             malloc_size++;
         }
-        my_putchar('c');
         tab[i] = malloc(sizeof(char) * o);
-        my_putchar('f');
         for (; str[n] != '\n' && str[n] != '\0'; j++, n++){
-            my_putchar('e');
             tab[i][j] = str[n];}
-        my_putchar('f');
         tab[i][j] = '\0';
-        my_putchar('g');
         j = 0;
-        my_putchar('h');
     }
-    my_putchar('i');
     tab[tab_size] = 0;
-    my_putchar('j');
     return (tab);
 }
 
@@ -62,7 +52,7 @@ char *read_file(char *path, char *buffer)
     int rd_return = read(fd, buffer, file_info.st_size);
 
     if (st_return || fd == -1 || rd_return == -1)
-        return (0);
+        return (NULL);
     else
         return (buffer);
 }
