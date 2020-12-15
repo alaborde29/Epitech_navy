@@ -13,9 +13,12 @@ NAME = navy
 
 SRC =	src/error.c 		\
 		src/error_2.c 		\
+		src/game_tab_setup.c\
+		src/navy.c 			\
+		src/utilities.c 	\
 		main.c
 
-FLAGS = -Werror -Wextra -Wall -Wshadow
+FLAGS = -Werror
 
 re: fclean all
 
