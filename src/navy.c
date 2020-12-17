@@ -7,6 +7,36 @@
 
 #include "my.h"
 #include "navy.h"
+#include <sys/types.h>
+#include <signal.h>
+
+void signal_handler(int signum) {
+    return ;
+}
+
+int get_signal(void)
+{
+    struct sigaction sa;
+
+    sa.sa_handler = &signal_handler;
+}
+
+void connect_players(char *pid)
+{
+    int i = 0;
+
+    my_printf("my_pid: %i\n", getpid());
+    /*if (pid == -1) {
+        my_putstr("waiting for enemy connection...\n");
+        while (i != 1) {
+            i = get_signal();
+        }
+    }
+    else {
+        kill(my_getnbr(pid), SIGUSR2);
+    }*/
+    return ;
+}
 
 void navy(char *pid, char *pos_path)
 {

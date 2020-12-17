@@ -11,6 +11,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <signal.h>
 
 #ifndef NAVY_H_
 #define NAVY_H_
