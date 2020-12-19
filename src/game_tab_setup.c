@@ -34,18 +34,10 @@ void put_boats_in_tab(char **array, char *pos_path)
     char *pos = 0;
     char **pos_tab = 0;
 
-    my_show_word_array(array);
-
     pos = read_file(pos_path, pos);
-    my_putchar('Z');
-    my_putstr(pos);
     pos_tab = split_lines(pos, 5);
-    my_putchar('\n');
-    my_show_word_array(pos_tab);
     for (int i = 0; i != 4; i++) {
         put_this_boat(array, pos_tab[i]);
-        my_show_word_array(array);
-        my_putchar('\n');
         }
     return ;
 }

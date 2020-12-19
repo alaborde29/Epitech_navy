@@ -10,7 +10,7 @@
 
 int main(int ac, char **av)
 {
-    if (error(ac, av) == 84)
+    if (error_navy(ac, av) == 1)
         return (84);
     if (ac == 2)
         navy("-1", av[1]);

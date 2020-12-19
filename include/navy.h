@@ -16,14 +16,16 @@
 #ifndef NAVY_H_
 #define NAVY_H_
 
+extern int sig_reception;
+
 typedef struct vector2i_s
 {
     int x;
     int y;
 }vector2i_t;
 
-
-int error(int ac, char **av);
+void get_calling_pid(void);
+int error_navy(int ac, char **av);
 char *read_file(char *path, char *buffer);
 int is_size_normal(char *str);
 void navy(char *pid, char *pos_path);

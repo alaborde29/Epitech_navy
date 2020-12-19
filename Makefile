@@ -16,7 +16,8 @@ SRC =	src/error.c 		\
 		src/game_tab_setup.c\
 		src/navy.c 			\
 		src/utilities.c 	\
-		main.c
+		src/signal.c		\
+		src/main.c
 
 FLAGS = -Werror
 
