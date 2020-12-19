@@ -14,8 +14,6 @@
 
 void pid_handler(int signum, siginfo_t *siginfo, void *other)
 {
-    int sig_reception;
-
     sig_reception = siginfo->si_pid;
     return ;
 }

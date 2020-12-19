@@ -10,10 +10,10 @@
 #include <sys/types.h>
 #include <sys/sysinfo.h>
 
+int sig_reception;
+
 void signal_handler(int signum, siginfo_t *siginfo, void *other)
 {
-    int sig_reception;
-
     if (signum == SIGUSR1) {
         my_putstr("sigusr1\n");
         sig_reception = 1;
@@ -39,32 +39,37 @@ int get_signal(void)
 
 void connect_player_1(char *pid)
 {
-    int sig_reception;
-
     my_putstr("waiting for enemy connection...\n");
         while (sig_reception != 1) {
-            get_signal();
+            my_putchar('a');
             my_put_nbr(sig_reception);
-            my_put_nbr('\n');
+            get_signal();
             sleep(5);
             my_putchar('\n');
         }
+        my_putchar('b');
         get_calling_pid();
+        my_putchar('c');
         kill(sig_reception, SIGUSR2);
+        my_putchar('d');
         my_putstr("enemy connected\n");
+        my_putchar('e');
 }
 
 void connect_players(char *pid)
 {
-    int sig_reception = 0;
-
+    sig_reception = 0;
     my_printf("my_pid: %i\n", getpid());
     if (my_getnbr(pid) == -1)
         connect_player_1(pid);
     else {
+        my_putchar('1');
         kill(my_getnbr(pid), SIGUSR1);
+        my_putchar('2');
         while (sig_reception != 2) {
+            my_putchar('3');
             get_signal();
+            my_putchar('4');
             sleep(5);
             my_putchar('\n');
         }
