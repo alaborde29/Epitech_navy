@@ -42,7 +42,8 @@ void connect_player_1(char *pid)
     my_putstr("waiting for enemy connection...\n");
         while (sig_reception != 1) {
             get_signal();
-            sleep(1);
+            my_put_nbr(sig_reception);
+            sleep(5);
             my_putchar('\n');
         }
         get_calling_pid();
@@ -53,12 +54,15 @@ void connect_player_1(char *pid)
 void connect_players(char *pid)
 {
     int sig_reception = 0;
+
     my_printf("my_pid: %i\n", getpid());
     if (my_getnbr(pid) == -1)
         connect_player_1(pid);
     else {
         kill(my_getnbr(pid), SIGUSR1);
         while (sig_reception = 2) {
+            get_signal();
+            my_put_nbr(sig_reception);
             sleep(5);
             my_putchar('\n');
         }
