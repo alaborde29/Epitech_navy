@@ -35,4 +35,10 @@ char **split_lines(char *str, int tab_size);
 int find_boat_orientation(char *str);
 vector2i_t create_vetor2i(int x, int y);
 void my_strdup(char *src, char *dest);
+void gameloop(char **my_pos, char **enemy_pos, int player_turn);
+int send_pos(char **enemy_pos);
+int get_pos(char **my_pos);
+void update_tab(char **array, char *pos, int flag);
+int get_signal(void);
+char *get_pos_from_enemy(void);
 #endif /* !NAVY_H_ */

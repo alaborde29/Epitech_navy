@@ -15,12 +15,10 @@ int sig_reception;
 void signal_handler(int signum, siginfo_t *siginfo, void *other)
 {
     if (signum == SIGUSR1) {
-        my_putstr("sigusr1\n");
         sig_reception = 1;
         return;
     }
     if (signum == SIGUSR2) {
-        my_putstr("sigusr1\n");
         sig_reception = 2;
         return;
     }
@@ -37,45 +35,35 @@ int get_signal(void)
     sigaction(SIGUSR2, &sa, NULL);
 }
 
-void connect_player_1(char *pid)
+int connect_player_1(void)
 {
+    int enemy_pid = 0;
+
     my_putstr("waiting for enemy connection...\n");
-        while (sig_reception != 1) {
-            my_putchar('a');
-            my_put_nbr(sig_reception);
-            get_signal();
-            sleep(5);
-            my_putchar('\n');
-        }
-        my_putchar('b');
-        get_calling_pid();
-        my_putchar('c');
-        kill(sig_reception, SIGUSR2);
-        my_putchar('d');
-        my_putstr("enemy connected\n");
-        my_putchar('e');
+    get_calling_pid();
+    pause();
+    enemy_pid = sig_reception;
+    kill(enemy_pid, SIGUSR2);
+    while (sig_reception != 2)
+        get_signal();
+    my_putchar('\n');
+    my_putstr("enemy connected\n");
+    return (enemy_pid);
 }
 
-void connect_players(char *pid)
+void connect_players(int pid, int player)
 {
     sig_reception = 0;
     my_printf("my_pid: %i\n", getpid());
-    if (my_getnbr(pid) == -1)
-        connect_player_1(pid);
+    if (player == -1)
+        pid = connect_player_1();
     else {
-        my_putchar('1');
-        kill(my_getnbr(pid), SIGUSR1);
-        my_putchar('2');
-        while (sig_reception != 2) {
-            my_putchar('3');
+        kill(pid, SIGUSR1);
+        while (sig_reception != 2)
             get_signal();
-            my_putchar('4');
-            sleep(5);
-            my_putchar('\n');
-        }
+        kill(pid, SIGUSR2);
         my_putstr("successfully connected\n");
     }
-    my_put_nbr(sig_reception);
     return ;
 }
 
@@ -83,8 +71,14 @@ void navy(char *pid, char *pos_path)
 {
     char **my_pos = setup_blank_tab();
     char **enemy_pos = setup_blank_tab();
+    int pid_int = my_getnbr(pid);
+    int player = my_getnbr(pid);
 
     put_boats_in_tab(my_pos, pos_path);
-    connect_players(pid);
+    connect_players(pid_int, player);
+    /*if (player == -1)
+        game_loop(my_pos, enemy_pos, 0);
+    if (player != -1)
+        game_loop(my_pos, enemy_pos, 1);*/
     return ;
 }
