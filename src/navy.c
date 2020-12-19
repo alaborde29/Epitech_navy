@@ -15,10 +15,12 @@ void signal_handler(int signum, siginfo_t *siginfo, void *other)
     int sig_reception;
 
     if (signum == SIGUSR1) {
+        my_putstr("sigusr1\n");
         sig_reception = 1;
         return;
     }
     if (signum == SIGUSR2) {
+        my_putstr("sigusr1\n");
         sig_reception = 2;
         return;
     }
@@ -43,6 +45,7 @@ void connect_player_1(char *pid)
         while (sig_reception != 1) {
             get_signal();
             my_put_nbr(sig_reception);
+            my_put_nbr('\n');
             sleep(5);
             my_putchar('\n');
         }
@@ -60,14 +63,14 @@ void connect_players(char *pid)
         connect_player_1(pid);
     else {
         kill(my_getnbr(pid), SIGUSR1);
-        while (sig_reception = 2) {
+        while (sig_reception != 2) {
             get_signal();
-            my_put_nbr(sig_reception);
             sleep(5);
             my_putchar('\n');
         }
         my_putstr("successfully connected\n");
     }
+    my_put_nbr(sig_reception);
     return ;
 }
 
