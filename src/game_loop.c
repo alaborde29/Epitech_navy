@@ -16,12 +16,12 @@ int send_game_statut(char **my_pos, int pid)
         kill(pid, SIGUSR2);
         usleep(15000);
         my_putstr("Enemy won\n");
-        return (0);
+        return (1);
     }
     else {
         kill(pid, SIGUSR1);
         usleep(15000);
-        return (1);
+        return (0);
     }
 }
 
@@ -57,20 +57,23 @@ void attack_turn(char **enemy_pos, int pid)
 void gameloop(char **my_pos, char **enemy_pos, int player_turn_setup, int pid)
 {
     int player_turn = player_turn_setup;
+    int is_game_finished = 0;
 
     while (1) {
-        my_printf("player turn = %i\n", player_turn);
         show_game_tabs(my_pos, enemy_pos);
         if (player_turn == 0)
             attack_turn(enemy_pos, pid);
-        if (did_i_won() == 0)
+        if (is_game_finished == 1)
             return ;
-        if (player_turn == 0)
+        if (player_turn == 0) {
+            is_game_finished = did_i_won();
             player_turn = 1;
+        }
         if (player_turn == 1)
             get_pos(my_pos, pid);
-        send_game_statut(my_pos, pid);
-        if (player_turn == 1)
+        if (player_turn == 1) {
             player_turn = 0;
+            send_game_statut(my_pos, pid);
+        }
     }
 }

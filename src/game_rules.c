@@ -32,7 +32,6 @@ int is_game_finished(char **my_pos)
 
 int does_pos_touch_something(char **array, char *pos)
 {
-    my_printf("position is %s\n", pos);
     if (array[pos[1] - '0' + 1][(pos[0] - 'A' + 2) * 2 - 2] != '.')
         return (0);
     return (1);

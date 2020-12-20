@@ -11,7 +11,7 @@
 #include <sys/sysinfo.h>
 #include <stdio.h>
 
-int is_pos_legal(char *pos)
+int is_pos_legal(char *pos, char **enemy_pos)
 {
     if (my_strlen(pos) != 3)
         return (-1);
@@ -19,6 +19,23 @@ int is_pos_legal(char *pos)
         return (-1);
     if (pos[1] < '1' || pos[1] > '8')
         return (-1);
+    if (enemy_pos[pos[1] - '0' + 1][(pos[0] - 'A' + 2) * 2 - 2] == 'x' \
+    || enemy_pos[pos[1] - '0' + 1][(pos[0] - 'A' + 2) * 2 - 2] == 'o')
+        return (-1);
+}
+
+int handle_reception(char **enemy_pos, char *pos)
+{
+    if (sig_reception == 1) {
+        update_tab(enemy_pos, pos, 1);
+        my_printf("%c%c: missed\n", pos[0], pos[1]);
+        return (1);
+    }
+    if (sig_reception == 2) {
+        update_tab(enemy_pos, pos, 0);
+        my_printf("%c%c: hit\n", pos[0], pos[1]);
+        return (0);
+    }
 }
 
 int send_pos(char **enemy_pos, int pid)
@@ -31,23 +48,17 @@ int send_pos(char **enemy_pos, int pid)
     my_printf("attack: ");
     characters = getline(&pos, &buffsize, stdin);
     pos[3] = '\0';
-    if (is_pos_legal(pos) == -1) {
+    if (is_pos_legal(pos, enemy_pos) == -1) {
         my_putstr("wrong position\n");
         return (2);
     }
     send_pos_to_enemy(pos, pid);
     get_signal();
     pause();
-    if (sig_reception == 1) {
-        update_tab(enemy_pos, pos, 1);
-        my_printf("%c%c: missed\n", pos[0], pos[1]);
+    if (handle_reception(enemy_pos, pos) == 1)
         return (1);
-    }
-    if (sig_reception == 2) {
-        update_tab(enemy_pos, pos, 0);
-        my_printf("%c%c: hit\n", pos[0], pos[1]);
+    else
         return (0);
-    }
 }
 
 int get_pos(char **my_pos, int pid)
