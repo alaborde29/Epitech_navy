@@ -26,15 +26,12 @@ char *get_pos_from_enemy(void)
     int number = 0;
     char *pos = malloc(sizeof(char) * 3);
 
-    my_put_nbr(sig_reception);
     while (sig_reception != 2) {
         get_signal();
         pause();
-        my_put_nbr(sig_reception);
         letter++;
     }
     sig_reception = 0;
-    my_putchar('M');
     while (sig_reception != 2) {
         get_signal();
         pause();

@@ -30,6 +30,7 @@ int send_pos(char **enemy_pos, int pid)
     pos = malloc(sizeof(char) * buffsize);
     my_printf("attack: ");
     characters = getline(&pos, &buffsize, stdin);
+    pos[3] = '\0';
     if (is_pos_legal(pos) == -1) {
         my_putstr("wrong position\n");
         return (2);
