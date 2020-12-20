@@ -70,8 +70,6 @@ void gameloop(char **my_pos, char **enemy_pos, int player_turn_setup, int pid)
         if (player_turn == 1)
             get_pos(my_pos, pid);
         send_game_statut(my_pos, pid);
-        kill(pid, SIGUSR1);
-        usleep(15000);
         if (player_turn == 1)
             player_turn = 0;
     }

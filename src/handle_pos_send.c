@@ -40,12 +40,12 @@ int send_pos(char **enemy_pos, int pid)
     pause();
     if (sig_reception == 1) {
         update_tab(enemy_pos, pos, 1);
-        my_printf("%s: missed\n", pos);
+        my_printf("%c%c: missed\n", pos[0], pos[1]);
         return (1);
     }
     if (sig_reception == 2) {
         update_tab(enemy_pos, pos, 0);
-        my_printf("%s: hit\n", pos);
+        my_printf("%c%c: hit\n", pos[0], pos[1]);
         return (0);
     }
 }

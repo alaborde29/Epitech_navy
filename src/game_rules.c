@@ -13,7 +13,6 @@
 
 void life_of_line(char **my_pos, int y, int *x, int *life)
 {
-    my_printf("x = %i", x[0]);
     while (x[0] <= 16) {
         if (my_pos[y][x[0]] >= '2' && my_pos[y][x[0]] <= '5')
             life[0]++;
