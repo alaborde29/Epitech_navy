@@ -11,12 +11,16 @@ all:
 
 NAME = navy
 
-SRC =	src/error.c 		\
-		src/error_2.c 		\
-		src/game_tab_setup.c\
-		src/navy.c 			\
-		src/utilities.c 	\
-		src/signal.c		\
+SRC =	src/error.c 			\
+		src/error_2.c 			\
+		src/game_loop.c 		\
+		src/game_rules.c 		\
+		src/game_tab_setup.c	\
+		src/handle_pos_send.c 	\
+		src/navy.c 				\
+		src/signal_converter.c 	\
+		src/signal.c 			\
+		src/utilities.c 		\
 		src/main.c
 
 FLAGS = -Werror

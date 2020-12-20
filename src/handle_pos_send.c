@@ -13,7 +13,7 @@
 
 int is_pos_legal(char *pos)
 {
-    if (my_strlen(pos) != 2)
+    if (my_strlen(pos) != 3)
         return (-1);
     if (pos[0] < 'A' || pos[0] > 'H')
         return (-1);
@@ -21,43 +21,52 @@ int is_pos_legal(char *pos)
         return (-1);
 }
 
-int send_pos(char **enemy_pos)
+int send_pos(char **enemy_pos, int pid)
 {
     char *pos;
     ssize_t characters;
     ssize_t buffsize = 3;
 
     pos = malloc(sizeof(char) * buffsize);
+    my_printf("attack: ");
     characters = getline(&pos, &buffsize, stdin);
-    my_printf("attack: %s\n", pos);
     if (is_pos_legal(pos) == -1) {
         my_putstr("wrong position\n");
         return (2);
     }
-    if (does_pos_touch_something(pos) == 1) {
-        update_tab(pos, enemy_pos, 1);
+    send_pos_to_enemy(pos, pid);
+    get_signal();
+    pause();
+    if (sig_reception == 1) {
+        update_tab(enemy_pos, pos, 1);
         my_printf("%s: missed\n", pos);
         return (1);
     }
-    if (does_pos_touch_something(pos) == 0) {
-        update_tab(pos, enemy_pos, 0);
+    if (sig_reception == 2) {
+        update_tab(enemy_pos, pos, 0);
         my_printf("%s: hit\n", pos);
         return (0);
     }
 }
 
-int get_pos(char **my_pos)
+int get_pos(char **my_pos, int pid)
 {
-    char *pos = get_pos_from_enemy();
+    char *pos;
 
-    if (does_pos_touch_something(pos) == 1) {
-        update_tab(pos, my_pos, 1);
-        my_printf("%s: missed\n", pos);
+    my_putstr("waiting for enemy's attack...\n");
+    pos = get_pos_from_enemy();
+    if (does_pos_touch_something(my_pos, pos) == 0) {
+        my_printf("%s: hit\n", pos);
+        update_tab(my_pos, pos, 0);
+        kill(pid, SIGUSR2);
+        usleep(15000);
         return (1);
     }
-    if (does_pos_touch_something(pos) == 0) {
-        update_tab(pos, my_pos, 0);
-        my_printf("%s: hit\n", pos);
+    if (does_pos_touch_something(my_pos, pos) == 1) {
+        my_printf("%s: missed\n", pos);
+        update_tab(my_pos, pos, 1);
+        kill(pid, SIGUSR1);
+        usleep(15000);
         return (1);
     }
 }

@@ -39,19 +39,21 @@ int connect_player_1(void)
 {
     int enemy_pid = 0;
 
-    my_putstr("waiting for enemy connection...\n");
+    my_putstr("waiting for enemy connection...\n\n");
     get_calling_pid();
     pause();
     enemy_pid = sig_reception;
     kill(enemy_pid, SIGUSR2);
-    while (sig_reception != 2)
+    while (sig_reception != 2) { 
         get_signal();
+        pause();
+    }
     my_putchar('\n');
-    my_putstr("enemy connected\n");
+    my_putstr("enemy connected\n\n");
     return (enemy_pid);
 }
 
-void connect_players(int pid, int player)
+int connect_players(int pid, int player)
 {
     sig_reception = 0;
     my_printf("my_pid: %i\n", getpid());
@@ -62,9 +64,9 @@ void connect_players(int pid, int player)
         while (sig_reception != 2)
             get_signal();
         kill(pid, SIGUSR2);
-        my_putstr("successfully connected\n");
+        my_putstr("successfully connected\n\n");
     }
-    return ;
+    return (pid);
 }
 
 void navy(char *pid, char *pos_path)
@@ -75,10 +77,10 @@ void navy(char *pid, char *pos_path)
     int player = my_getnbr(pid);
 
     put_boats_in_tab(my_pos, pos_path);
-    connect_players(pid_int, player);
-    /*if (player == -1)
-        game_loop(my_pos, enemy_pos, 0);
+    pid_int = connect_players(pid_int, player);
+    if (player == -1)
+        gameloop(my_pos, enemy_pos, 0, pid_int);
     if (player != -1)
-        game_loop(my_pos, enemy_pos, 1);*/
+        gameloop(my_pos, enemy_pos, 1, pid_int);
     return ;
 }
