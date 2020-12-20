@@ -59,18 +59,21 @@ void gameloop(char **my_pos, char **enemy_pos, int player_turn_setup, int pid)
     int player_turn = player_turn_setup;
     int is_game_finished = 0;
 
-    while (1) {
+    if (player_turn == 0)
         show_game_tabs(my_pos, enemy_pos);
+    while (1) {
         if (player_turn == 0)
             attack_turn(enemy_pos, pid);
-        if (is_game_finished == 1)
-            return ;
+        // if (is_game_finished == 1)
+        //     return ;
         if (player_turn == 0) {
             is_game_finished = did_i_won();
             player_turn = 1;
         }
-        if (player_turn == 1)
+        if (player_turn == 1) {
+            show_game_tabs(my_pos, enemy_pos);
             get_pos(my_pos, pid);
+        }
         if (player_turn == 1) {
             player_turn = 0;
             send_game_statut(my_pos, pid);
