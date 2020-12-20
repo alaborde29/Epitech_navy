@@ -28,12 +28,16 @@ int handle_reception(char **enemy_pos, char *pos)
 {
     if (sig_reception == 1) {
         update_tab(enemy_pos, pos, 1);
-        my_printf("%c%c: missed\n", pos[0], pos[1]);
+        my_putchar(pos[0]);
+        my_putchar(pos[1]);
+        my_printf(": missed\n\n");
         return (1);
     }
     if (sig_reception == 2) {
         update_tab(enemy_pos, pos, 0);
-        my_printf("%c%c: hit\n", pos[0], pos[1]);
+        my_putchar(pos[0]);
+        my_putchar(pos[1]);
+        my_printf(": hit\n\n");
         return (0);
     }
 }
@@ -47,14 +51,14 @@ int send_pos(char **enemy_pos, int pid)
     pos = malloc(sizeof(char) * buffsize);
     my_printf("attack: ");
     characters = getline(&pos, &buffsize, stdin);
-    pos[3] = '\0';
+    // pos[3] = '\0';
     if (is_pos_legal(pos, enemy_pos) == -1) {
         my_putstr("wrong position\n");
         return (2);
     }
     send_pos_to_enemy(pos, pid);
-    get_signal();
-    pause();
+    /*get_signal();
+    pause();*/
     if (handle_reception(enemy_pos, pos) == 1)
         return (1);
     else

@@ -61,8 +61,10 @@ int connect_players(int pid, int player)
         pid = connect_player_1();
     else {
         kill(pid, SIGUSR1);
-        while (sig_reception != 2)
+        while (sig_reception != 2) {
             get_signal();
+            pause();
+        }
         kill(pid, SIGUSR2);
         my_putstr("successfully connected\n\n");
     }

@@ -14,7 +14,7 @@
 
 void put_info_in_str(char *pos, int letter, int number)
 {
-    pos[0] = letter + 'A' - 1;
+    pos[0] = letter + 'A' - 2;
     pos[1] = number + '0' - 1;
     pos[2] = '\0';
     sig_reception = 1;
