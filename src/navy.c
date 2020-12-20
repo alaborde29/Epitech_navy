@@ -39,12 +39,12 @@ int connect_player_1(void)
 {
     int enemy_pid = 0;
 
-    my_putstr("waiting for enemy connection...\n\n");
+    my_putstr("waiting for enemy connection...\n");
     get_calling_pid();
     pause();
     enemy_pid = sig_reception;
     kill(enemy_pid, SIGUSR2);
-    while (sig_reception != 2) { 
+    while (sig_reception != 2) {
         get_signal();
         pause();
     }

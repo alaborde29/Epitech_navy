@@ -34,16 +34,8 @@ int is_game_finished(char **my_pos)
 int does_pos_touch_something(char **array, char *pos)
 {
     my_printf("position is %s\n", pos);
-    if (array[pos[1] - '0' + 1][(pos[0] - 'A' + 2) * 2 - 2] != '.'){
-        my_putchar('\n');
-        my_printf("letter pos 0= %i\n", (pos[0] - 'A' + 2) * 2 - 2);
-        my_printf("number pos 0= %i\n", (pos[1] - '0' + 1));
-        my_putchar('\n');
-        return (0);}
-    my_putchar('\n');
-    my_printf("letter pos 1= %i\n", (pos[0] - 'A' + 2) * 2 - 2);
-    my_printf("number pos 1= %i\n", (pos[1] - '0' + 1));
-    my_putchar('\n');
+    if (array[pos[1] - '0' + 1][(pos[0] - 'A' + 2) * 2 - 2] != '.')
+        return (0);
     return (1);
 }
 
