@@ -44,10 +44,6 @@ int connect_player_1(void)
     pause();
     enemy_pid = sig_reception;
     kill(enemy_pid, SIGUSR2);
-    while (sig_reception != 2) {
-        get_signal();
-        pause();
-    }
     my_putchar('\n');
     my_putstr("enemy connected\n\n");
     return (enemy_pid);
@@ -65,7 +61,6 @@ int connect_players(int pid, int player)
             get_signal();
             pause();
         }
-        kill(pid, SIGUSR2);
         my_putstr("successfully connected\n\n");
     }
     return (pid);

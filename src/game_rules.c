@@ -11,22 +11,30 @@
 #include <sys/sysinfo.h>
 #include <stdio.h>
 
-void life_of_line(char **my_pos, int y, int *x, int *life)
+int life_of_line(char **my_pos, int y, int x)
 {
-    while (x[0] <= 16) {
-        if (my_pos[y][x[0]] >= '2' && my_pos[y][x[0]] <= '5')
-            life[0]++;
-        x[0] = x[0] + 2;
+    int n = 0;
+
+    while (x <= 16) {
+        if (my_pos[y][x] == 'x')
+            n++;
+        x = x + 2;
     }
+    return (n);
 }
 
 int is_game_finished(char **my_pos)
 {
     int x = 2;
-    int life = 0;
+    int life = 14;
+    int y = 2;
 
-    for (int y = 2; y != 10; y++)
-        life_of_line(my_pos, y, &x, &life);
+    while (y != 10) {
+        life = life - life_of_line(my_pos, y, x);
+        y++;
+    }
+    my_put_nbr(life);
+    my_putchar('\n');
     return (life);
 }
 

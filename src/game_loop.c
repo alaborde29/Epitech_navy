@@ -31,9 +31,9 @@ int did_i_won(void)
     pause();
     if (sig_reception == 2) {
         my_putstr("I won\n");
-        return (0);
+        return (1);
     }
-    return (1);
+    return (0);
 }
 
 void show_game_tabs(char **my_pos, char **enemy_pos)
@@ -61,19 +61,18 @@ void gameloop(char **my_pos, char **enemy_pos, int player_turn, int pid)
     if (player_turn == 0)
         show_game_tabs(my_pos, enemy_pos);
     sig_reception = 1;
-    if (player_turn == 0){
-        attack_turn(enemy_pos, pid);
-        return ;
-    }
-    /*if (player_turn == 0) {
-        player_turn = 1;
-    }*/
-    if (player_turn == 1) {
-        show_game_tabs(my_pos, enemy_pos);
-        get_pos(my_pos, pid);
-    }
-    if (player_turn == 1) {
-        player_turn = 0;
+    while (is_game_finished == 0) {
+        if (player_turn == 0){
+            attack_turn(enemy_pos, pid);
+            is_game_finished = did_i_won();
+            player_turn = 1;
+        }
+        if (player_turn == 1) {
+            show_game_tabs(my_pos, enemy_pos);
+            get_pos(my_pos, pid);
+            is_game_finished = send_game_statut(my_pos, pid);
+            player_turn = 0;
+        }
     }
     return ;
 }

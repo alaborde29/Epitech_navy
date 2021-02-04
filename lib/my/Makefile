@@ -54,7 +54,7 @@ all:	$(NAME)
 
 $(NAME):	$(OBJ)
 	ar -rc $(NAME) $(OBJ)
-	cp libmy.a  ../../
+	cp libmy.a  ../
 
 clean:
 	rm -f $(OBJ)

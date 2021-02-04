@@ -53,7 +53,6 @@ int send_pos(char **enemy_pos, int pid)
     characters = getline(&pos, &buffsize, stdin);
     // pos[3] = '\0';
     if (is_pos_legal(pos, enemy_pos) == -1) {
-        my_putstr("wrong position\n");
         return (2);
     }
     send_pos_to_enemy(pos, pid);
