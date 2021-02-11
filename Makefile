@@ -16,6 +16,7 @@ SRC =		src/error.c				\
 			src/signal.c			\
 			src/utilities.c			\
 			src/usage.c				\
+			src/line_error.c		\
 			src/main.c
 
 NAME    =   navy

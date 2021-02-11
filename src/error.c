@@ -32,6 +32,8 @@ int is_file_content_right(char *str)
     for (int i = 0; i != 4; i++) {
         if (is_line_well_formatted(tab[i], i) == 1)
             return (1);
+        if (are_lines_crossing(tab) == 1)
+            return (1);
     }
     return (0);
 }
@@ -48,7 +50,7 @@ int error_navy(int ac, char **av)
         buffer = read_file(av[2], buffer);
     if (buffer == 0)
         return (1);
-    if (is_file_content_right(buffer) == 84)
+    if (is_file_content_right(buffer) == 1)
         return (1);
     return (0);
 }

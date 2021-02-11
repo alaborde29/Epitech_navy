@@ -46,4 +46,5 @@ int is_game_finished(char **my_pos);
 int does_pos_touch_something(char **array, char *pos);
 void usage(void);
 int are_str_the_same(char *str1, char *str2);
+int are_lines_crossing(char **tab);
 #endif /* !NAVY_H_ */

@@ -11,7 +11,7 @@
 int find_boat_orientation(char *str)
 {
     if (str[2] == str[5])
-        return (1);
+        return (1); //vert
     if (str[3] == str[6])
         return (2);
     if ((str[2] != str[5]) && (str[3] != str[6]))
