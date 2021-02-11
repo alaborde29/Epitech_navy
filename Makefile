@@ -5,12 +5,6 @@
 ## printf
 ##
 
-all:
-	make -C lib/my/
-	gcc -o $(NAME) $(SRC) $(FLAGS) $(CSFML) -I./include -L./lib/my -lmy
-
-NAME = navy
-
 SRC =	src/error.c 			\
 		src/error_2.c 			\
 		src/game_loop.c 		\
@@ -21,17 +15,26 @@ SRC =	src/error.c 			\
 		src/signal_converter.c 	\
 		src/signal.c 			\
 		src/utilities.c 		\
+		src/usage.c 			\
 		src/main.c
 
-FLAGS = -Werror
+OBJ		=	$(SRC: .c=.o)
 
-re: fclean all
+NAME	= 	navy
+
+all: 		$(NAME)
+
+$(NAME):	$(OBJ)
+			make -C lib/my
+			gcc -g -o $(NAME) $(OBJ) -Llib -lmy -Iinclude
 
 clean:
-	$(RM) *.o
+		rm -f *.o
 
-fclean:	clean
-	$(RM) libmy.a
-	$(RM) lib/my/libmy.a
+fclean: clean
+		rm -f $(NAME)
+		make fclean -C lib/my
+
+re:		fclean all
 
 .PHONY : all main clean fclean
