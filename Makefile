@@ -1,40 +1,47 @@
 ##
-## EPITECH PROJECT, 2020
-## makefile
+## EPITECH PROJECT, 2021
+## Makefile
 ## File description:
-## printf
+## navy
 ##
 
-SRC =	src/error.c 			\
-		src/error_2.c 			\
-		src/game_loop.c 		\
-		src/game_rules.c 		\
-		src/game_tab_setup.c	\
-		src/handle_pos_send.c 	\
-		src/navy.c 				\
-		src/signal_converter.c 	\
-		src/signal.c 			\
-		src/utilities.c 		\
-		src/usage.c 			\
-		src/main.c
+SRC =		src/error.c				\
+			src/error_2.c			\
+			src/game_loop.c			\
+			src/game_rules.c		\
+			src/game_tab_setup.c	\
+			src/handle_pos_send.c	\
+			src/navy.c				\
+			src/signal_converter.c	\
+			src/signal.c			\
+			src/utilities.c			\
+			src/usage.c				\
+			src/main.c
 
-OBJ		=	$(SRC: .c=.o)
+NAME    =   navy
 
-NAME	= 	navy
+CFLAGS  =   -Werror -Wall -Wextra -Wshadow -I./include
 
-all: 		$(NAME)
+OBJ     =   $(SRC:.c=.o)
 
-$(NAME):	$(OBJ)
-			make -C lib/my
-			gcc -g -o $(NAME) $(OBJ) -Llib -lmy -Iinclude
+CC      =   gcc
+
+RM      =   rm -rf
+
+all:        $(NAME)
+
+$(NAME):    $(OBJ)
+			make -C lib/my/
+			$(CC) -o $(NAME) $(OBJ) -L./lib/my -lmy
 
 clean:
-		rm -f *.o
+			make clean -C lib/my
+			$(RM) $(OBJ)
 
-fclean: clean
-		rm -f $(NAME)
-		make fclean -C lib/my
+fclean:     clean
+			make fclean -C lib/my
+			$(RM) $(NAME)
 
-re:		fclean all
+re:         fclean all
 
-.PHONY : all main clean fclean
+.PHONY : all clean fclean

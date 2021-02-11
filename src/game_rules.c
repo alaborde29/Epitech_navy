@@ -33,8 +33,6 @@ int is_game_finished(char **my_pos)
         life = life - life_of_line(my_pos, y, x);
         y++;
     }
-    my_put_nbr(life);
-    my_putchar('\n');
     return (life);
 }
 

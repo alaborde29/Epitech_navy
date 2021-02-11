@@ -41,7 +41,7 @@ char *get_pos_from_enemy(void)
     return (pos);
 }
 
-int send_pos_to_enemy(char *pos, int pid)
+void send_pos_to_enemy(char *pos, int pid)
 {
     int i = 0;
 

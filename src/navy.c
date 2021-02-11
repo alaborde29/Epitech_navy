@@ -22,10 +22,12 @@ void signal_handler(int signum, siginfo_t *siginfo, void *other)
         sig_reception = 2;
         return;
     }
+    (void)siginfo;
+    (void)other;
     return ;
 }
 
-int get_signal(void)
+void get_signal(void)
 {
     struct sigaction sa;
 

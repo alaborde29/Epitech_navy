@@ -17,8 +17,9 @@ void put_this_boat(char **array, char *boat)
     if (boat_orientation == 1) {
         if (pos2.y < pos1.y)
             my_swap(&pos2.y, &pos1.y);
-            for (int n = pos1.y + 2; n != pos2.y + 3; n++){
-                array[n][pos1.x * 2 + 2] = boat[0];}
+        for (int n = pos1.y + 2; n != pos2.y + 3; n++) {
+            array[n][pos1.x * 2 + 2] = boat[0];
+        }
     }
     if (boat_orientation == 2) {
         if (pos2.x < pos1.x)

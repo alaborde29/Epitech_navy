@@ -57,22 +57,24 @@ void attack_turn(char **enemy_pos, int pid)
 void gameloop(char **my_pos, char **enemy_pos, int player_turn, int pid)
 {
     int is_game_finished = 0;
+    int player_type = player_turn;
 
-    if (player_turn == 0)
-        show_game_tabs(my_pos, enemy_pos);
+    show_game_tabs(my_pos, enemy_pos);
     sig_reception = 1;
-    while (is_game_finished == 0) {
-        if (player_turn == 0){
+    for (int first_turn = 1; is_game_finished == 0; first_turn = 0) {
+        if (player_turn == 0) {
             attack_turn(enemy_pos, pid);
             is_game_finished = did_i_won();
             player_turn = 1;
         }
-        if (player_turn == 1) {
+        if (player_type == 1 && first_turn == 0)
             show_game_tabs(my_pos, enemy_pos);
+        if (player_turn == 1) {
             get_pos(my_pos, pid);
             is_game_finished = send_game_statut(my_pos, pid);
             player_turn = 0;
         }
+        if (player_type == 0)
+            show_game_tabs(my_pos, enemy_pos);
     }
-    return ;
 }

@@ -39,9 +39,11 @@ void gameloop(char **my_pos, char **enemy_pos, int player_turn, int pid);
 int send_pos(char **enemy_pos, int pid);
 int get_pos(char **my_pos, int pid);
 void update_tab(char **array, char *pos, int flag);
-int get_signal(void);
+void get_signal(void);
 char *get_pos_from_enemy(void);
-int send_pos_to_enemy(char *pos, int pid);
+void send_pos_to_enemy(char *pos, int pid);
 int is_game_finished(char **my_pos);
 int does_pos_touch_something(char **array, char *pos);
+void usage(void);
+int are_str_the_same(char *str1, char *str2);
 #endif /* !NAVY_H_ */

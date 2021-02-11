@@ -20,6 +20,20 @@ void my_strdup(char *src, char *dest)
     return ;
 }
 
+int are_str_the_same(char *str1, char *str2)
+{
+    int i = 0;
+
+    if (my_strlen(str1) != my_strlen(str2))
+        return (-1);
+    while (str1[i] != '\0') {
+        if (str1[i] != str2[i])
+            return (-1);
+        i++;
+    }
+    return (0);
+}
+
 char **split_lines(char *str, int tab_size)
 {
     char **tab = malloc(sizeof(char *) * tab_size);

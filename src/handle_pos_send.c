@@ -22,6 +22,7 @@ int is_pos_legal(char *pos, char **enemy_pos)
     if (enemy_pos[pos[1] - '0' + 1][(pos[0] - 'A' + 2) * 2 - 2] == 'x' \
     || enemy_pos[pos[1] - '0' + 1][(pos[0] - 'A' + 2) * 2 - 2] == 'o')
         return (-1);
+    return (0);
 }
 
 int handle_reception(char **enemy_pos, char *pos)
@@ -40,28 +41,28 @@ int handle_reception(char **enemy_pos, char *pos)
         my_printf(": hit\n\n");
         return (0);
     }
+    return (0);
 }
 
 int send_pos(char **enemy_pos, int pid)
 {
     char *pos;
-    ssize_t characters;
-    ssize_t buffsize = 3;
+    size_t buffsize = 3;
 
     pos = malloc(sizeof(char) * buffsize);
     my_printf("attack: ");
-    characters = getline(&pos, &buffsize, stdin);
-    // pos[3] = '\0';
+    getline(&pos, &buffsize, stdin);
     if (is_pos_legal(pos, enemy_pos) == -1) {
+        my_putstr("wrong position\n");
         return (2);
     }
     send_pos_to_enemy(pos, pid);
-    /*get_signal();
-    pause();*/
-    if (handle_reception(enemy_pos, pos) == 1)
+    if (handle_reception(enemy_pos, pos) == 1) { //modified
+        //my_printf("%c%c: missed\n\n", pos[0], pos[1]);
         return (1);
-    else
-        return (0);
+    }
+    //my_printf("%c%c: hit\n\n", pos[0], pos[1]);
+    return (0);
 }
 
 int get_pos(char **my_pos, int pid)
@@ -71,17 +72,18 @@ int get_pos(char **my_pos, int pid)
     my_putstr("waiting for enemy's attack...\n");
     pos = get_pos_from_enemy();
     if (does_pos_touch_something(my_pos, pos) == 0) {
-        my_printf("%s: hit\n", pos);
+        my_printf("%s: hit\n\n", pos);
         update_tab(my_pos, pos, 0);
         kill(pid, SIGUSR2);
         usleep(15000);
         return (1);
     }
     if (does_pos_touch_something(my_pos, pos) == 1) {
-        my_printf("%s: missed\n", pos);
+        my_printf("%s: missed\n\n", pos);
         update_tab(my_pos, pos, 1);
         kill(pid, SIGUSR1);
         usleep(15000);
         return (1);
     }
+    return (0);
 }
